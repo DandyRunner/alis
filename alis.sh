@@ -1756,6 +1756,7 @@ function print_step() {
     echo -e "${LIGHT_BLUE}#======================================================"
     echo -e "${LIGHT_BLUE}# ${STEP} step${NC}"
     echo -e "${LIGHT_BLUE}#======================================================"
+    read -p "Enter any key to continue ....."
 }
 
 function execute_step() {
