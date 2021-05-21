@@ -1753,9 +1753,9 @@ function do_reboot() {
 
 function print_step() {
     STEP="$1"
-    echo ""
+    echo -e "${LIGHT_BLUE}#======================================================"
     echo -e "${LIGHT_BLUE}# ${STEP} step${NC}"
-    echo ""
+    echo -e "${LIGHT_BLUE}#======================================================"
 }
 
 function execute_step() {
