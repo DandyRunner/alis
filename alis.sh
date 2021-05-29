@@ -104,10 +104,10 @@ function sanitize_variables() {
 
 function sanitize_variable() {
     VARIABLE=$1
-    VARIABLE=$(echo $VARIABLE | sed "s/![^ ]*//g") # remove disabled
-    VARIABLE=$(echo $VARIABLE | sed "s/ {2,}/ /g") # remove unnecessary white spaces
-    VARIABLE=$(echo $VARIABLE | sed 's/^[[:space:]]*//') # trim leading
-    VARIABLE=$(echo $VARIABLE | sed 's/[[:space:]]*$//') # trim trailing
+    VARIABLE=$(echo "$VARIABLE" | sed "s/![^ ]*//g") # remove disabled
+    VARIABLE=$(echo "$VARIABLE" | sed "s/ {2,}/ /g") # remove unnecessary white spaces
+    VARIABLE=$(echo "$VARIABLE" | sed 's/^[[:space:]]*//') # trim leading
+    VARIABLE=$(echo "$VARIABLE" | sed 's/[[:space:]]*$//') # trim trailing
     echo "$VARIABLE"
 }
 
@@ -124,7 +124,7 @@ function check_variables() {
         check_variables_value "PARTITION_CUSTOM_PARTED_UEFI" "$PARTITION_CUSTOM_PARTED_UEFI"
         check_variables_value "PARTITION_CUSTOM_PARTED_BIOS" "$PARTITION_CUSTOM_PARTED_BIOS"
     fi
-    if [ "$PARTITION_MODE" == "custom" -o "$PARTITION_MODE" == "manual" ]; then
+    if [ "$PARTITION_MODE" == "custom" ] || [ "$PARTITION_MODE" == "manual" ]; then
         check_variables_value "PARTITION_CUSTOMMANUAL_BOOT" "$PARTITION_CUSTOMMANUAL_BOOT"
         check_variables_value "PARTITION_CUSTOMMANUAL_ROOT" "$PARTITION_CUSTOMMANUAL_ROOT"
     fi
@@ -197,7 +197,7 @@ function check_variables_list() {
     VALUE=$2
     VALUES=$3
     REQUIRED=$4
-    if [ "$REQUIRED" == "" -o "$REQUIRED" == "true" ]; then
+    if [ "$REQUIRED" == "" ] || [ "$REQUIRED" == "true" ]; then
         check_variables_value "$NAME" "$VALUE"
     fi
 
@@ -235,7 +235,7 @@ function warning() {
     echo -e "${RED}This script deletes all partitions of the persistent${NC}"
     echo -e "${RED}storage and continuing all your data in it will be lost.${NC}"
     echo ""
-    read -p "Do you want to continue? [y/N] " yn
+    read -p -r "Do you want to continue? [y/N] " yn
     case $yn in
         [Yy]* )
             ;;
@@ -503,7 +503,7 @@ function partition() {
         PARTITION_PARTED_BIOS="$PARTITION_CUSTOM_PARTED_BIOS"
     fi
 
-    if [ "$PARTITION_MODE" == "custom" -o "$PARTITION_MODE" == "manual" ]; then
+    if [ "$PARTITION_MODE" == "custom" ] || [ "$PARTITION_MODE" == "manual" ]; then
         PARTITION_BOOT="$PARTITION_CUSTOMMANUAL_BOOT"
         PARTITION_ROOT="$PARTITION_CUSTOMMANUAL_ROOT"
         DEVICE_ROOT="${PARTITION_ROOT}"
@@ -525,7 +525,7 @@ function partition() {
         partprobe $DEVICE
     fi
 
-    if [ "$PARTITION_MODE" == "auto" -o "$PARTITION_MODE" == "custom" ]; then
+    if [ "$PARTITION_MODE" == "auto" ] || [ "$PARTITION_MODE" == "custom" ]; then
         if [ "$BIOS_TYPE" == "uefi" ]; then
             parted -s $DEVICE $PARTITION_PARTED_UEFI
             if [ -n "$LUKS_PASSWORD" ]; then
@@ -578,7 +578,7 @@ function partition() {
     if [ "$BIOS_TYPE" == "bios" ]; then
         mkfs.ext4 -L boot $PARTITION_BOOT
     fi
-    if [ "$FILE_SYSTEM_TYPE" == "f2fs" -o "$FILE_SYSTEM_TYPE" == "reiserfs" ]; then
+    if [ "$FILE_SYSTEM_TYPE" == "f2fs" ] || [ "$FILE_SYSTEM_TYPE" == "reiserfs" ]; then
         mkfs."$FILE_SYSTEM_TYPE" -l root $DEVICE_ROOT
     else
         mkfs."$FILE_SYSTEM_TYPE" -L root $DEVICE_ROOT
@@ -772,7 +772,7 @@ function mkinitcpio_configuration() {
         if [ "$FRAMEBUFFER_COMPRESSION" == "true" ]; then
             OPTIONS="$OPTIONS enable_fbc=1"
         fi
-        if [ -n "$OPTIONS"]; then
+        if [ -n "$OPTIONS" ]; then
             echo "options i915 $OPTIONS" > /mnt/etc/modprobe.d/i915.conf
         fi
     fi
@@ -821,7 +821,7 @@ function mkinitcpio_configuration() {
     if [ "$KERNELS_COMPRESSION" == "bzip2" ]; then
         pacman_install "bzip2"
     fi
-    if [ "$KERNELS_COMPRESSION" == "lzma" -o "$KERNELS_COMPRESSION" == "xz" ]; then
+    if [ "$KERNELS_COMPRESSION" == "lzma" ] || [ "$KERNELS_COMPRESSION" == "xz" ]; then
         pacman_install "xz"
     fi
     if [ "$KERNELS_COMPRESSION" == "lzop" ]; then
@@ -1822,7 +1822,7 @@ function main() {
     FOUND="false"
     STEPS=""
     for S in ${ALL_STEPS[@]}; do
-        if [ $FOUND = "true" -o "${STEP}" = "${S}" ]; then
+        if [ $FOUND = "true" ] || [ "${STEP}" = "${S}" ]; then
             FOUND="true"
             STEPS="$STEPS $S"
         fi
