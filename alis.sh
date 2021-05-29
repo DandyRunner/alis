@@ -235,7 +235,7 @@ function warning() {
     echo -e "${RED}This script deletes all partitions of the persistent${NC}"
     echo -e "${RED}storage and continuing all your data in it will be lost.${NC}"
     echo ""
-    read -p -r "Do you want to continue? [y/N] " yn
+    read -p "Do you want to continue? [y/N] " yn
     case $yn in
         [Yy]* )
             ;;
