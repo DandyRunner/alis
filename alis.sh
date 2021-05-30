@@ -235,7 +235,7 @@ function warning() {
     echo -e "${RED}This script deletes all partitions of the persistent${NC}"
     echo -e "${RED}storage and continuing all your data in it will be lost.${NC}"
     echo ""
-    read -p "Do you want to continue? [y/N] " yn
+    echo "Do you want to continue? [y/N] "; read -r yn
     case $yn in
         [Yy]* )
             ;;
@@ -260,7 +260,7 @@ function init_log() {
         exec > >(tee -a $LOG_FILE)
         exec 2> >(tee -a $LOG_FILE >&2)
     fi
-    set -o xtrace
+#    set -o xtrace
 }
 
 function facts() {
@@ -1756,7 +1756,7 @@ function print_step() {
     echo -e "${LIGHT_BLUE}#======================================================"
     echo -e "${LIGHT_BLUE}# ${STEP} step${NC}"
     echo -e "${LIGHT_BLUE}#======================================================"
-    read -p "Enter any key to continue ....."
+    echo "Enter any key to continue ....."; read -r
 }
 
 function execute_step() {
