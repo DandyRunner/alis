@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-sed -i "s/LOG=.*/LOG=\"true\"/" ./alis.conf
+sed -i "s/LOG=.*/LOG=\"false\"/" ./alis.conf
 sed -i "s#DEVICE=.*#DEVICE=\"/dev/sda\"#" ./alis.conf
 sed -i "s/LVM=.*/LVM=\"false\"/" ./alis.conf
 sed -i "s/LUKS_PASSWORD=.*/LUKS_PASSWORD=\"\"/" ./alis.conf
@@ -16,3 +16,4 @@ sed -i "s/PACKAGES_FLATPAK_INSTALL=.*/PACKAGES_FLATPAK_INSTALL=\"true\"/" ./alis
 sed -i "s/PACKAGES_SDKMAN_INSTALL=.*/PACKAGES_SDKMAN_INSTALL=\"true\"/" ./alis.conf
 sed -i "s/PACKAGES_FLATPAK_CUSTOM=.*/PACKAGES_FLATPAK_CUSTOM=\"org.videolan.VLC\"/" ./alis.conf
 sed -i "s/PACKAGES_SDKMAN_SDKS=.*/PACKAGES_SDKMAN_SDKS=\"java:11.0.7-open\"/" ./alis.conf
+

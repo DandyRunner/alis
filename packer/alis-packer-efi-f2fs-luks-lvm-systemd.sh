@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-sed -i "s/LOG=.*/LOG=\"true\"/" ./alis.conf
+sed -i "s/LOG=.*/LOG=\"false\"/" ./alis.conf
 sed -i "s#DEVICE=.*#DEVICE=\"/dev/sda\"#" ./alis.conf
 sed -i "s/FILE_SYSTEM_TYPE=.*/FILE_SYSTEM_TYPE=\"f2fs\"/" ./alis.conf
 sed -i "s/LVM=.*/LVM=\"true\"/" ./alis.conf
@@ -15,3 +15,4 @@ sed -i "s/BOOTLOADER=.*/BOOTLOADER=\"systemd\"/" ./alis.conf
 sed -i "s/DESKTOP_ENVIRONMENT=.*/DESKTOP_ENVIRONMENT=\"\"/" ./alis.conf
 sed -i "s/PACKAGES_FLATPAK_CUSTOM=.*/PACKAGES_FLATPAK_CUSTOM=\"org.videolan.VLC\"/" ./alis.conf
 sed -i "s/PACKAGES_SDKMAN_SDKS=.*/PACKAGES_SDKMAN_SDKS=\"java:11.0.7-open\"/" ./alis.conf
+
